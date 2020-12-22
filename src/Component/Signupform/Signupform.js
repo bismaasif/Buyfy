@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-const Signupform=()=>{
+import {signup} from './../../Redux/auth/authActions'
+import {connect} from 'react-redux'
+const Signupform=({signup})=>{
 
     var [Fullname, setFullname]=useState("");
     var [Email, setEmail]=useState("");
     var [Password, setPassword]=useState("");
     var formsubmit=(e)=>{
         e.preventDefault();
-        console.log(Fullname)
-        console.log(Email)
-        console.log(Password)
+
+        var cred={
+            Fullname,Email,Password
+        }
+        signup(cred)
     }
     return(
         <>
@@ -21,4 +25,7 @@ const Signupform=()=>{
         </>
     )
 }
-export default Signupform;
+var actions={
+    signup
+}
+export default connect(null,actions)(Signupform);
