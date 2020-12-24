@@ -16,7 +16,7 @@ import "firebase/firestore";
 
 export var auth=firebase.auth();
 export var firestore=firebase.firestore();
-//export var provider=new firebase.auth.GoogleAuthProvider();
+export var Googleauthprovider=new firebase.auth.GoogleAuthProvider();
 export var serverTimestamp=()=>firebase.firestore.FieldValue.serverTimestamp();
-  export default firebase;
+export default firebase;
   

@@ -1,5 +1,7 @@
-import { auth, firestore, serverTimestamp } from "../../Firebase/Firebase"
-import { Remove_user, Set_user } from "./authConstants"
+import { auth, firestore, Googleauthprovider, serverTimestamp } from "../../Firebase/Firebase"
+import { Remove_user, Set_user } from "./authConstants";
+import firebase from "../../Firebase/Firebase";
+
 
 
 export var removeuser=()=>({
@@ -70,10 +72,71 @@ export var signout=()=>async(dispatch)=>{
         //signout user from firebase auth
         await auth.signOut();
         //set user state to null
-        dispatch(removeuser())
+       // dispatch(removeuser())
     } catch (error) {
         console.log(error)
         
     }
 
+}
+export var signinwithgoogle=()=>async(dispatch)=>{
+    try {
+        //sign in user in firebase with auth (google)
+        var {user:{displayName,email,uid},additionalUserInfo:{isNewUser}}= await auth.signInWithPopup(Googleauthprovider)
+        if(isNewUser){
+            
+    //save user's info to firestore
+         var userinfo={
+            Fullname:displayName,
+            Email:email,
+            createdAt:serverTimestamp()
+        }
+       // console.log(userinfo)
+       
+       await firestore.collection("users").doc(uid).set(userinfo);
+}
+  //set user data to auth state
+  var userforstate1={
+      
+    Fullname:displayName,
+     Email:email,
+     uid,
+ };
+    dispatch(Setuser(userforstate1))
+
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+export var checkauthstatus=()=>async(dispatch)=>{
+    try {
+      //  var user= auth.onAuthStateChanged();
+      //  console.log(user)
+      firebase.auth().onAuthStateChanged(async function(user)
+      {
+          if (user){
+            var {uid}=user;
+               //fetch user data from firestore
+    var userdata = await firestore.collection("users").doc(uid).get()
+    var {Fullname,Email}=userdata.data();
+    //settting up redux state
+    var userforstate={
+        Fullname,
+        Email,
+        uid
+    }
+  dispatch(Setuser(userforstate))
+
+
+          }
+          else{
+            //set user state to null
+        dispatch(removeuser())
+          }
+      })
+    } catch (error) {
+        console.log(error)
+        
+    }
 }

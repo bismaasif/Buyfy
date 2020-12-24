@@ -6,8 +6,16 @@ import Category from './Pages/Category/Category';
 import CategoryProducts from './Pages/CategoryProducts/CategoryProducts';
 import Checkout from './Pages/Checkout/Checkout';
 import Authentication from './Pages/Authentication/Authetication';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {checkauthstatus} from './Redux/auth/authActions'
 
-function App() {
+function App({checkauthstatus}) {
+  useEffect(()=>
+  {
+//cdm
+checkauthstatus()
+},[])
   return (
    
    <Switch>
@@ -23,5 +31,8 @@ function App() {
    
   );
 }
+var actions={
+  checkauthstatus
+}
 
-export default App;
+export default connect(null,actions)(App);
