@@ -27,6 +27,7 @@ export var ProductActions=(productobj)=>async()=>{
      console.log(productobj);
         //3-create doc in firestore
         await firestore.collection("products").add(productobj);
+        
      });
         
         
