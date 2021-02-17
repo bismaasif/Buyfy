@@ -9,6 +9,7 @@ import Authentication from './Pages/Authentication/Authetication';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {checkauthstatus} from './Redux/auth/authActions'
+import Test from './Pages/Test/Test';
 
 function App({checkauthstatus}) {
   useEffect(()=>
@@ -25,6 +26,7 @@ checkauthstatus()
      <Route path="/categoryproducts" component={CategoryProducts} exact/>
      <Route path="/checkout" component={Checkout} exact/>
      <Route path="/authentication" component={Authentication} exact/>
+     <Route path="/test" component={Test} exact/>
 
 
    </Switch>
