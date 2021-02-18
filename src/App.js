@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {checkauthstatus} from './Redux/auth/authActions'
 import Test from './Pages/Test/Test';
+import Navbar from './Component/Navbar/Navbar';
+import "./App.css"
 
 function App({checkauthstatus}) {
   useEffect(()=>
@@ -18,7 +20,8 @@ function App({checkauthstatus}) {
 checkauthstatus()
 },[])
   return (
-   
+   <>
+   <Navbar/>
    <Switch>
      
      <Route path="/" component={Home} exact/>
@@ -30,7 +33,7 @@ checkauthstatus()
 
 
    </Switch>
-   
+   </>
   );
 }
 var actions={
